@@ -3,8 +3,8 @@ import time
 import statistics
 
 class ListaOperaciones:
-    listas_creadas = []
-   
+
+    listas_creadas = []   
 
     def __init__(self):
         self.mi_lista = []
@@ -20,7 +20,7 @@ class ListaOperaciones:
 
     def mostrar_menu_principal(self):
         while True:
-            print("\nMenú Principal:")
+            print('\n','='*3,'Menú Principal','='*3)
             print("1. Generar lista aleatoria")
             print("2. Ingresar lista manualmente")
             print("3. Usar lista previamente cargada")
@@ -28,7 +28,7 @@ class ListaOperaciones:
             print("5. Ayuda")
             print("6. Salir")
 
-            opcion = input("Elija una opción: ")
+            opcion = input("\nElija una opción: ")
 
             try:
                 opcion = int(opcion)
@@ -92,8 +92,8 @@ class ListaOperaciones:
 
     def mostrar_submenu(self):
         while True:
-            print("\nSubmenú:")
-            print("a. Imprimir lista")
+            print("\n¿Qué desea realizar con su lista?:")
+            print("\na. Imprimir lista")
             print("b. Ordenar con burbuja")
             print("c. Ordenar con rápido")
             print("d. Comparar con sorted()")
@@ -109,7 +109,7 @@ class ListaOperaciones:
             print("n. Comparar con otra lista")
             print("o. Volver al menú principal")
 
-            opcion_submenu = input("Elija una opción del submenú: ")
+            opcion_submenu = input("\nElija una opción: ").lower()
 
             if opcion_submenu == 'a':
                 self.imprimir_lista()
@@ -145,10 +145,8 @@ class ListaOperaciones:
                 print("Opción no válida. Elija una opción del submenú.")
 
     def imprimir_lista(self):
-        print("Lista generada (primeros 10 elementos):", self.mi_lista[:10])
-        
+        print("Lista generada (primeros 10 elementos):", self.mi_lista[:10])     
   
-     
     def ordenar_con_burbuja(self):
         lista_ordenada = self.mi_lista.copy()
         start_time = time.time()
@@ -169,9 +167,7 @@ class ListaOperaciones:
         end_time = time.time()
         self.tiempo_rapido = end_time - start_time 
         print("Lista ordenada con rápido (primeros 10 elementos):", lista_ordenada[:10])
-        print("Tiempo de ejecución:", end_time - start_time, "segundos")
-        
-       
+        print("Tiempo de ejecución:", end_time - start_time, "segundos")              
     
     def comparar_con_sorted(self):
         times = []
@@ -189,33 +185,48 @@ class ListaOperaciones:
         print("Tiempos de ejecución promedio para ordenar con sorted():", statistics.mean(times), "segundos")
 
     def buscar_elemento_lineal(self):
+        """ 
+        Búsqueda lineal.
+        Si x está en lista devuelve su posición en lista, de lo
+        contrario devuelve -1.
+        """
         elemento = int(input("Ingrese el elemento a buscar: "))
         for i, num in enumerate(self.mi_lista):
             if num == elemento:
                 print("Elemento encontrado en la posición", i)
-                return
+                return i
         print("Elemento no encontrado.")
+        return -1
 
     def buscar_elemento_binaria(self):
+        
+        """
+        Búsqueda binaria
+        Precondición: lista está ordenada
+        Devuelve -1 si x no está en lista;
+        Devuelve p tal que lista[p] == x, si x está en lista
+        """    
         if not self.mi_lista:
             print("La lista está vacía.")
             return
 
         elemento = int(input("Ingrese el elemento a buscar: "))
-        self.mi_lista.sort()
-
-        start_time = time.time()
-        left, right = 0, len(self.mi_lista) - 1
+        lista_copiada = self.mi_lista.copy()
+        lista_ordenada = lista_copiada.sort()
+        n = self.__len__()
+        # start_time = time.time()
+        left, right = 0, n - 1
         while left <= right:
             mid = (left + right) // 2
-            if self.mi_lista[mid] == elemento:
+            if self.lista_ordenada[mid] == elemento:
                 print("Elemento encontrado en la posición", mid)
-                return
-            elif self.mi_lista[mid] < elemento:
+                return mid
+            elif lista_ordenada[mid] < elemento:
                 left = mid + 1
             else:
                 right = mid - 1
         print("Elemento no encontrado.")
+        return -1
 
     def sumar_elementos(self):
         suma = sum(self.mi_lista)
@@ -238,7 +249,7 @@ class ListaOperaciones:
     def calcular_varianza(self):
         if len(self.mi_lista) > 0:
             varianza = statistics.variance(self.mi_lista)
-            print("Varianza:", varianza)
+            print(f'Varianza: {varianza:.3f}')
         else:
             print("La lista está vacía.")
 
@@ -299,11 +310,11 @@ class ListaOperaciones:
         return ListaOperaciones.quicksort(left) + middle + ListaOperaciones.quicksort(right)
 
     def mostrar_ayuda(self):
-        print("\nAyuda:")
-        print("Este programa le permite realizar diversas operaciones en una lista de números.")
-        print("Puede generar una lista aleatoria, ingresar una lista manualmente, usar una lista previamente cargada")
-        print("o generar una lista desde un rango específico.")
-        print("Luego, puede realizar varias operaciones en la lista, como ordenar, buscar, calcular estadísticas, etc.")
+        print("\nAyuda: \
+        \nEste programa le permite realizar diversas operaciones en una lista de números.\
+        \nPuede generar una lista aleatoria, ingresar una lista manualmente, \
+        usar una lista previamente cargada o generar una especificando un rango.\
+        \nLuego, puede realizar varias operaciones en la lista, como ordenar, buscar, calcular estadísticas, etc.")
 
 if __name__ == "__main__":
     menu = ListaOperaciones()
