@@ -142,7 +142,7 @@ class ListaOperaciones:
             elif opcion_submenu == 'o':
                 break
             else:
-                print("Opción no válida. Elija una opción del submenú.")
+                print("Opción invalida, elija que desea realizar.")
 
     def imprimir_lista(self):
         print("Lista generada (primeros 10 elementos):", self.mi_lista[:10])     
@@ -198,8 +198,7 @@ class ListaOperaciones:
         print("Elemento no encontrado.")
         return -1
 
-    def buscar_elemento_binaria(self):
-        
+    def buscar_elemento_binaria(self):        
         """
         Búsqueda binaria
         Precondición: lista está ordenada
@@ -212,16 +211,16 @@ class ListaOperaciones:
 
         elemento = int(input("Ingrese el elemento a buscar: "))
         lista_copiada = self.mi_lista.copy()
-        lista_ordenada = lista_copiada.sort()
+        lista_copiada.sort()
         n = self.__len__()
         # start_time = time.time()
         left, right = 0, n - 1
         while left <= right:
             mid = (left + right) // 2
-            if self.lista_ordenada[mid] == elemento:
+            if lista_copiada[mid] == elemento:
                 print("Elemento encontrado en la posición", mid)
                 return mid
-            elif lista_ordenada[mid] < elemento:
+            elif lista_copiada[mid] < elemento:
                 left = mid + 1
             else:
                 right = mid - 1
