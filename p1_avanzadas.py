@@ -1,3 +1,10 @@
+
+"""
+Equipo:
+    - Alberth Londoño Rodriguez
+    - Esteban Vásquez Cano
+"""
+
 import random
 import time
 import statistics
@@ -198,7 +205,6 @@ class MenuLista:
                 break
             else:
                 print("Opción invalida, elija que desea realizar.")
-
         
     @staticmethod # Este método es estático y puede ser llamado sin necesidad de una instancia de la clase
     def quicksort(arr):
@@ -276,7 +282,6 @@ class OperacionesLista(MenuLista):
         print("Tiempo de ejecución con burbuja:", self.tiempo_burbuja, "segundos")
         print("Tiempo de ejecución con rápido:", self.tiempo_rapido, "segundos")
         print("Tiempos de ejecución promedio para ordenar con sorted():", statistics.mean(times), "segundos")
-
     def buscar_elemento_lineal(self):
         """ 
         Búsqueda lineal.
@@ -306,7 +311,6 @@ class OperacionesLista(MenuLista):
         lista_copiada = self.mi_lista.copy()
         lista_copiada.sort()
         n = self.__len__()
-        # start_time = time.time()
         left, right = 0, n - 1
         while left <= right:
             mid = (left + right) // 2
@@ -321,6 +325,10 @@ class OperacionesLista(MenuLista):
         return -1
     
 class Estadisticas(OperacionesLista):
+    
+    """
+    Esta clase permite realizar calculos basicos y estadisticos de una lista.
+    """
     
     @property
     def sumar_elementos(self):
