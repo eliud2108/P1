@@ -82,15 +82,22 @@ class MenuLista:
         Genera una lista de datos aleatorios, donde el tamaño de la
         lista es ingresado por el usuario.
         """
-        tamano = int(input("Ingrese el tamaño de la lista aleatoria: "))
+        while True:
+            try:
+                tamano = int(input("Ingrese el tamaño de la lista aleatoria: "))
+                break  # Sale del bucle si se ingresó un número entero válido
+            except ValueError:
+                print("¡Eso no es un número entero válido! Intente nuevamente.")
+        
         self.mi_lista = [random.randint(0, 100000) for _ in range(tamano)]# Crea una lista aleatoria con 'tamano' elementos, donde cada elemento es un número aleatorio entre 0 y 10000 (inclusive).
         print("Lista aleatoria generada.")
         self.mostrar_10_primeros_elementos()
-
+ 
     def ingresar_lista_manualmente(self):
         """
         Permite al usuario ingresar una lista de números manualmente para ser operada.
         """
+        
         elementos = input("Ingrese los elementos separados por coma: ").split(",")
         try:
             self.mi_lista = [int(e) for e in elementos]
@@ -115,9 +122,19 @@ class MenuLista:
         """
         Permite que el usuario ingrese una lista desde un rango rango determinado con n elementos.
         """
-        inicio = int(input("Ingrese el valor inicial del rango: "))
-        fin = int(input("Ingrese el valor final del rango: "))
-        tamano = int(input("Ingrese el tamaño de la lista: "))
+        while True:
+            try:
+                inicio = int(input("Ingrese el valor inicial del rango: "))
+                fin = int(input("Ingrese el valor final del rango: ")) 
+                tamano = int(input("Ingrese el tamaño de la lista: "))
+                
+                if inicio < fin and tamano > 0:                    
+                    break  # Sale del bucle si se ingresó un número entero válido
+                else: 
+                    print(f'\nEl valor de inicio debe ser menor al final y debe contener por los menos 1 elemento.\n')
+            except ValueError:
+                print("¡Eso no es un número entero válido! Intente nuevamente.")
+
         self.mi_lista = [random.randint(inicio, fin) for _ in range(tamano)]
         print("Lista generada desde rango.")
         self.mostrar_10_primeros_elementos()
@@ -182,8 +199,6 @@ class MenuLista:
             else:
                 print("Opción invalida, elija que desea realizar.")
 
-    def imprimir_lista(self):
-        print("Lista generada: ", self.mi_lista[:10])
         
     @staticmethod # Este método es estático y puede ser llamado sin necesidad de una instancia de la clase
     def quicksort(arr):
@@ -194,6 +209,30 @@ class MenuLista:
         middle = [x for x in arr if x == pivot]
         right = [x for x in arr if x > pivot]
         return MenuLista.quicksort(left) + middle + MenuLista.quicksort(right)  
+    
+    def comparar_con_otra_lista(self):
+        otra_lista = input("Ingrese otra lista de números separados por coma: ").split(",")
+        try:
+            otra_lista = [int(e) for e in otra_lista]
+        except ValueError:
+            print("Entrada no válida. Ingrese números separados por coma.")
+            return
+
+        if self.mi_lista == otra_lista:
+            print("Las listas son iguales.")
+        else:
+            print("Las listas no son iguales.")   
+            
+    def imprimir_lista(self):
+        print("Lista generada: ", self.mi_lista[:10])
+        
+    @classmethod
+    def mostrar_ayuda(cls):
+        print("\nAyuda: \
+        \nEste programa le permite realizar diversas operaciones en una lista de números.\
+        \nPuede generar una lista aleatoria, ingresar una lista manualmente, \
+        usar una lista previamente cargada o generar una especificando un rango.\
+        \nLuego, puede realizar varias operaciones en la lista, como ordenar, buscar, calcular estadísticas, etc.")
     
 class OperacionesLista(MenuLista):      
     
@@ -280,7 +319,9 @@ class OperacionesLista(MenuLista):
                 right = mid - 1
         print("Elemento no encontrado.")
         return -1
-
+    
+class Estadisticas(OperacionesLista):
+    
     @property
     def sumar_elementos(self):
         suma = sum(self.mi_lista)
@@ -328,27 +369,7 @@ class OperacionesLista(MenuLista):
     def mostrar_longitud_lista(self):
         longitud = len(self.mi_lista)
         print("Longitud de la lista: ", longitud)      
-        
-    def comparar_con_otra_lista(self):
-        otra_lista = input("Ingrese otra lista de números separados por coma: ").split(",")
-        try:
-            otra_lista = [int(e) for e in otra_lista]
-        except ValueError:
-            print("Entrada no válida. Ingrese números separados por coma.")
-            return
-
-        if self.mi_lista == otra_lista:
-            print("Las listas son iguales.")
-        else:
-            print("Las listas no son iguales.")    
-    @property
-    def mostrar_ayuda(self):
-        print("\nAyuda: \
-        \nEste programa le permite realizar diversas operaciones en una lista de números.\
-        \nPuede generar una lista aleatoria, ingresar una lista manualmente, \
-        usar una lista previamente cargada o generar una especificando un rango.\
-        \nLuego, puede realizar varias operaciones en la lista, como ordenar, buscar, calcular estadísticas, etc.")
-
+         
 if __name__ == "__main__":
-    menu = OperacionesLista()
+    menu = Estadisticas()
     menu.mostrar_menu_principal()
