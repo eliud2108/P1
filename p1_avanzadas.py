@@ -1,26 +1,54 @@
+
+"""
+Equipo:
+    - Alberth Londoño Rodriguez
+    - Esteban Vásquez Cano
+"""
+
 import random
 import time
 import statistics
 
-class ListaOperaciones:
-    listas_creadas = []
-   
+class MenuLista:
+    
+    """
+    Esta clase permite al usuario llenar una lista de diferentes maneras y obtener
+    información sobre ella.
+    """
+
+    listas_creadas = []   
 
     def __init__(self):
+        """
+        Inicializa una instancia de MenuLista con una lista vacía.
+        """
         self.mi_lista = []
         self.tiempo_burbuja = None
         self.tiempo_rapido = None
-        ListaOperaciones.listas_creadas.append(self)
+        MenuLista.listas_creadas.append(self)
 
     def __str__(self):
+        """
+        Devuelve una representación en forma de cadena de la lista actual almacenada en 
+        la instancia de MenuLista.
+    
+        Returns:
+            str: Una cadena que representa la lista de números.
+        """
         return f"Lista de números: {self.mi_lista}"
 
     def __len__(self):
+        """
+        Devuelve la longitud de la lista actual almacenada en la instancia de MenuLista.
+        
+        Returns:
+            int: La cantidad de elementos en la lista.
+        """
         return len(self.mi_lista)
 
     def mostrar_menu_principal(self):
         while True:
-            print("\nMenú Principal:")
+            print('\n','='*3,'Menú Principal','='*3)
             print("1. Generar lista aleatoria")
             print("2. Ingresar lista manualmente")
             print("3. Usar lista previamente cargada")
@@ -28,7 +56,7 @@ class ListaOperaciones:
             print("5. Ayuda")
             print("6. Salir")
 
-            opcion = input("Elija una opción: ")
+            opcion = input("\nElija una opción: ")
 
             try:
                 opcion = int(opcion)
@@ -57,12 +85,26 @@ class ListaOperaciones:
                 print("Opción no válida. Elija una opción del menú.")
 
     def generar_lista_aleatoria(self):
-        tamano = int(input("Ingrese el tamaño de la lista aleatoria: "))
-        self.mi_lista = [random.randint(0, 100000) for _ in range(tamano)]
+        """
+        Genera una lista de datos aleatorios, donde el tamaño de la
+        lista es ingresado por el usuario.
+        """
+        while True:
+            try:
+                tamano = int(input("Ingrese el tamaño de la lista aleatoria: "))
+                break  # Sale del bucle si se ingresó un número entero válido
+            except ValueError:
+                print("¡Eso no es un número entero válido! Intente nuevamente.")
+        
+        self.mi_lista = [random.randint(0, 100000) for _ in range(tamano)]# Crea una lista aleatoria con 'tamano' elementos, donde cada elemento es un número aleatorio entre 0 y 10000 (inclusive).
         print("Lista aleatoria generada.")
         self.mostrar_10_primeros_elementos()
-
+ 
     def ingresar_lista_manualmente(self):
+        """
+        Permite al usuario ingresar una lista de números manualmente para ser operada.
+        """
+        
         elementos = input("Ingrese los elementos separados por coma: ").split(",")
         try:
             self.mi_lista = [int(e) for e in elementos]
@@ -72,6 +114,10 @@ class ListaOperaciones:
             print("Entrada no válida. Ingrese números separados por coma.")
 
     def usar_lista_previamente_cargada(self):
+        """
+        Permite al usuario trabajar con la última lista creada, ya sea aleatoria,
+        manual o desde rango.
+        """
         if not self.mi_lista:
             print("No hay una lista previamente cargada.")
         else:
@@ -80,20 +126,36 @@ class ListaOperaciones:
             self.mostrar_submenu()
 
     def generar_lista_desde_rango(self):
-        inicio = int(input("Ingrese el valor inicial del rango: "))
-        fin = int(input("Ingrese el valor final del rango: "))
-        tamano = int(input("Ingrese el tamaño de la lista: "))
+        """
+        Permite que el usuario ingrese una lista desde un rango rango determinado con n elementos.
+        """
+        while True:
+            try:
+                inicio = int(input("Ingrese el valor inicial del rango: "))
+                fin = int(input("Ingrese el valor final del rango: ")) 
+                tamano = int(input("Ingrese el tamaño de la lista: "))
+                
+                if inicio < fin and tamano > 0:                    
+                    break  # Sale del bucle si se ingresó un número entero válido
+                else: 
+                    print(f'\nEl valor de inicio debe ser menor al final y debe contener por los menos 1 elemento.\n')
+            except ValueError:
+                print("¡Eso no es un número entero válido! Intente nuevamente.")
+
         self.mi_lista = [random.randint(inicio, fin) for _ in range(tamano)]
         print("Lista generada desde rango.")
         self.mostrar_10_primeros_elementos()
 
     def mostrar_10_primeros_elementos(self):
-        print("Los 10 primeros elementos de la lista son:", self.mi_lista[:10])
+        """
+        Imprime en consola las 10 primeras posiciones de la lista
+        """
+        print("Los primeros elementos de la lista son:", self.mi_lista[:10])
 
     def mostrar_submenu(self):
         while True:
-            print("\nSubmenú:")
-            print("a. Imprimir lista")
+            print("\n¿Qué desea realizar con su lista?:")
+            print("\na. Imprimir lista")
             print("b. Ordenar con burbuja")
             print("c. Ordenar con rápido")
             print("d. Comparar con sorted()")
@@ -109,7 +171,7 @@ class ListaOperaciones:
             print("n. Comparar con otra lista")
             print("o. Volver al menú principal")
 
-            opcion_submenu = input("Elija una opción del submenú: ")
+            opcion_submenu = input("\nElija una opción: ").lower()
 
             if opcion_submenu == 'a':
                 self.imprimir_lista()
@@ -124,30 +186,65 @@ class ListaOperaciones:
             elif opcion_submenu == 'f':
                 self.buscar_elemento_binaria()
             elif opcion_submenu == 'g':
-                self.sumar_elementos()
+                self.sumar_elementos
             elif opcion_submenu == 'h':
-                self.calcular_promedio()
+                self.calcular_promedio
             elif opcion_submenu == 'i':
-                self.calcular_mediana()
+                self.calcular_mediana
             elif opcion_submenu == 'j':
-                self.calcular_varianza()
+                self.calcular_varianza
             elif opcion_submenu == 'k':
-                self.encontrar_minimo()
+                self.encontrar_minimo
             elif opcion_submenu == 'l':
-                self.encontrar_maximo()
+                self.encontrar_maximo
             elif opcion_submenu == 'm':
-                self.mostrar_longitud_lista()
+                self.mostrar_longitud_lista
             elif opcion_submenu == 'n':
                 self.comparar_con_otra_lista()
             elif opcion_submenu == 'o':
                 break
             else:
-                print("Opción no válida. Elija una opción del submenú.")
-
-    def imprimir_lista(self):
-        print("Lista generada (primeros 10 elementos):", self.mi_lista[:10])
+                print("Opción invalida, elija que desea realizar.")
         
-  
+    @staticmethod # Este método es estático y puede ser llamado sin necesidad de una instancia de la clase
+    def quicksort(arr):
+        if len(arr) <= 1:
+            return arr
+        pivot = arr[len(arr) // 2]
+        left = [x for x in arr if x < pivot]
+        middle = [x for x in arr if x == pivot]
+        right = [x for x in arr if x > pivot]
+        return MenuLista.quicksort(left) + middle + MenuLista.quicksort(right)  
+    
+    def comparar_con_otra_lista(self):
+        otra_lista = input("Ingrese otra lista de números separados por coma: ").split(",")
+        try:
+            otra_lista = [int(e) for e in otra_lista]
+        except ValueError:
+            print("Entrada no válida. Ingrese números separados por coma.")
+            return
+
+        if self.mi_lista == otra_lista:
+            print("Las listas son iguales.")
+        else:
+            print("Las listas no son iguales.")   
+            
+    def imprimir_lista(self):
+        print("Lista generada: ", self.mi_lista[:10])
+        
+    @classmethod
+    def mostrar_ayuda(cls):
+        print("\nAyuda: \
+        \nEste programa le permite realizar diversas operaciones en una lista de números.\
+        \nPuede generar una lista aleatoria, ingresar una lista manualmente, \
+        usar una lista previamente cargada o generar una especificando un rango.\
+        \nLuego, puede realizar varias operaciones en la lista, como ordenar, buscar, calcular estadísticas, etc.")
+    
+class OperacionesLista(MenuLista):      
+    
+    """
+    Esta clase permite al usuario hacer diferente operaciones con una lista previamente obtenida
+    """
      
     def ordenar_con_burbuja(self):
         lista_ordenada = self.mi_lista.copy()
@@ -169,9 +266,7 @@ class ListaOperaciones:
         end_time = time.time()
         self.tiempo_rapido = end_time - start_time 
         print("Lista ordenada con rápido (primeros 10 elementos):", lista_ordenada[:10])
-        print("Tiempo de ejecución:", end_time - start_time, "segundos")
-        
-       
+        print("Tiempo de ejecución:", end_time - start_time, "segundos")              
     
     def comparar_con_sorted(self):
         times = []
@@ -187,124 +282,102 @@ class ListaOperaciones:
         print("Tiempo de ejecución con burbuja:", self.tiempo_burbuja, "segundos")
         print("Tiempo de ejecución con rápido:", self.tiempo_rapido, "segundos")
         print("Tiempos de ejecución promedio para ordenar con sorted():", statistics.mean(times), "segundos")
-
     def buscar_elemento_lineal(self):
+        """ 
+        Búsqueda lineal.
+        Si x está en lista devuelve su posición en lista, de lo
+        contrario devuelve -1.
+        """
         elemento = int(input("Ingrese el elemento a buscar: "))
-        for i, num in enumerate(self.mi_lista):
-            if num == elemento:
-                print("Elemento encontrado en la posición", i)
-                return
+        for i, num in enumerate(self.mi_lista):# Recorre la lista actual almacenada en la instancia, junto con sus índices, utilizando 'enumerate'
+            if num == elemento:# Compara cada elemento de la lista con el elemento ingresado por el usuario.
+                print("Elemento encontrado en la posición (indice):", i)# Si se encuentra una coincidencia, imprime la posición (índice) donde se encontró el elemento.
+                return i
         print("Elemento no encontrado.")
+        return -1
 
-    def buscar_elemento_binaria(self):
+    def buscar_elemento_binaria(self):        
+        """
+        Búsqueda binaria
+        Precondición: lista está ordenada
+        Devuelve -1 si x no está en lista;
+        Devuelve p tal que lista[p] == x, si x está en lista
+        """    
         if not self.mi_lista:
             print("La lista está vacía.")
             return
 
         elemento = int(input("Ingrese el elemento a buscar: "))
-        self.mi_lista.sort()
-
-        start_time = time.time()
-        left, right = 0, len(self.mi_lista) - 1
+        lista_copiada = self.mi_lista.copy()
+        lista_copiada.sort()
+        n = self.__len__()
+        left, right = 0, n - 1
         while left <= right:
             mid = (left + right) // 2
-            if self.mi_lista[mid] == elemento:
+            if lista_copiada[mid] == elemento:
                 print("Elemento encontrado en la posición", mid)
-                return
-            elif self.mi_lista[mid] < elemento:
+                return mid
+            elif lista_copiada[mid] < elemento:
                 left = mid + 1
             else:
                 right = mid - 1
         print("Elemento no encontrado.")
-
+        return -1
+    
+class Estadisticas(OperacionesLista):
+    
+    """
+    Esta clase permite realizar calculos basicos y estadisticos de una lista.
+    """
+    
+    @property
     def sumar_elementos(self):
         suma = sum(self.mi_lista)
         print("Suma de elementos:", suma)
 
+    @property    
     def calcular_promedio(self):
         if len(self.mi_lista) > 0:
             promedio = sum(self.mi_lista) / len(self.mi_lista)
-            print("Promedio:", promedio)
+            print(f'Promedio: {promedio:.3f}')
         else:
             print("La lista está vacía.")
-
+            
+    @property
     def calcular_mediana(self):
         if len(self.mi_lista) > 0:
             mediana = statistics.median(self.mi_lista)
-            print("Mediana:", mediana)
+            print(f'Mediana: {mediana:.3f}')
         else:
             print("La lista está vacía.")
-
+            
+    @property
     def calcular_varianza(self):
         if len(self.mi_lista) > 0:
             varianza = statistics.variance(self.mi_lista)
-            print("Varianza:", varianza)
+            print(f'Varianza: {varianza:.3f}')
         else:
             print("La lista está vacía.")
-
+            
+    @property
     def encontrar_minimo(self):
         if len(self.mi_lista) > 0:
             minimo = min(self.mi_lista)
-            print("Mínimo de la lista:", minimo)
+            print("Mínimo de la lista: ", minimo)
         else:
             print("La lista está vacía.")
-
+    @property
     def encontrar_maximo(self):
         if len(self.mi_lista) > 0:
             maximo = max(self.mi_lista)
-            print("Máximo de la lista:", maximo)
+            print("Máximo de la lista: ", maximo)
         else:
             print("La lista está vacía.")
-
+    @property
     def mostrar_longitud_lista(self):
         longitud = len(self.mi_lista)
-        print("Longitud de la lista:", longitud)
-        
-        
-    """@classmethod
-    def comparar_todas_con_otra_lista(cls, otra_lista):
-        listas_iguales = []
-        for lista in cls.listas_creadas:
-            if lista.mi_lista == otra_lista:
-                listas_iguales.append(lista)
-        
-        if not listas_iguales:
-            print("No hay listas que sean iguales a la lista proporcionada.")
-        else:
-            print("Las siguientes listas son iguales a la lista proporcionada:")
-            for lista in listas_iguales:
-                print(f"Lista en la instancia {lista}:", lista.mi_lista)"""
-
-    def comparar_con_otra_lista(self):
-        otra_lista = input("Ingrese otra lista de números separados por coma: ").split(",")
-        try:
-            otra_lista = [int(e) for e in otra_lista]
-        except ValueError:
-            print("Entrada no válida. Ingrese números separados por coma.")
-            return
-
-        if self.mi_lista == otra_lista:
-            print("Las listas son iguales.")
-        else:
-            print("Las listas no son iguales.")
-
-    @staticmethod
-    def quicksort(arr):
-        if len(arr) <= 1:
-            return arr
-        pivot = arr[len(arr) // 2]
-        left = [x for x in arr if x < pivot]
-        middle = [x for x in arr if x == pivot]
-        right = [x for x in arr if x > pivot]
-        return ListaOperaciones.quicksort(left) + middle + ListaOperaciones.quicksort(right)
-
-    def mostrar_ayuda(self):
-        print("\nAyuda:")
-        print("Este programa le permite realizar diversas operaciones en una lista de números.")
-        print("Puede generar una lista aleatoria, ingresar una lista manualmente, usar una lista previamente cargada")
-        print("o generar una lista desde un rango específico.")
-        print("Luego, puede realizar varias operaciones en la lista, como ordenar, buscar, calcular estadísticas, etc.")
-
+        print("Longitud de la lista: ", longitud)      
+         
 if __name__ == "__main__":
-    menu = ListaOperaciones()
+    menu = Estadisticas()
     menu.mostrar_menu_principal()
