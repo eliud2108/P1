@@ -138,7 +138,7 @@ class MenuLista:
                 if inicio < fin and tamano > 0:                    
                     break  # Sale del bucle si se ingresó un número entero válido
                 else: 
-                    print(f'\nEl valor de inicio debe ser menor al final y debe contener por los menos 1 elemento.\n')
+                    print('\nEl valor de inicio debe ser menor al final y debe contener por los menos 1 elemento.\n')
             except ValueError:
                 print("¡Eso no es un número entero válido! Intente nuevamente.")
 
@@ -257,7 +257,7 @@ class OperacionesLista(MenuLista):
         end_time = time.time()
         self.tiempo_burbuja = end_time - start_time
         print("Lista ordenada con burbuja (primeros 10 elementos):", lista_ordenada[:10])
-        print("Tiempo de ejecución:", end_time - start_time, "segundos")
+        print(f'Tiempo de ejecución: {end_time - start_time} segundos')
 
     def ordenar_con_rapido(self):
         lista_ordenada = self.mi_lista.copy()
@@ -266,7 +266,7 @@ class OperacionesLista(MenuLista):
         end_time = time.time()
         self.tiempo_rapido = end_time - start_time 
         print("Lista ordenada con rápido (primeros 10 elementos):", lista_ordenada[:10])
-        print("Tiempo de ejecución:", end_time - start_time, "segundos")              
+        print(f'Tiempo de ejecución: {end_time - start_time} segundos')              
     
     def comparar_con_sorted(self):
         times = []
@@ -279,9 +279,10 @@ class OperacionesLista(MenuLista):
             lista_copia.sort()
             end_time = time.time()
             times.append(end_time - start_time)
-        print("Tiempo de ejecución con burbuja:", self.tiempo_burbuja, "segundos")
-        print("Tiempo de ejecución con rápido:", self.tiempo_rapido, "segundos")
-        print("Tiempos de ejecución promedio para ordenar con sorted():", statistics.mean(times), "segundos")
+        print(f'Tiempo de ejecución con burbuja: {self.tiempo_burbuja} segundos')
+        print(f'Tiempo de ejecución con rápido: {self.tiempo_rapido} segundos')
+        print(f'Tiempos de ejecución promedio para ordenar con sorted(): {statistics.mean(times)} segundos')
+        
     def buscar_elemento_lineal(self):
         """ 
         Búsqueda lineal.
@@ -291,7 +292,7 @@ class OperacionesLista(MenuLista):
         elemento = int(input("Ingrese el elemento a buscar: "))
         for i, num in enumerate(self.mi_lista):# Recorre la lista actual almacenada en la instancia, junto con sus índices, utilizando 'enumerate'
             if num == elemento:# Compara cada elemento de la lista con el elemento ingresado por el usuario.
-                print("Elemento encontrado en la posición (indice):", i)# Si se encuentra una coincidencia, imprime la posición (índice) donde se encontró el elemento.
+                print(f'Elemento encontrado en la posición indice: {i}')# Si se encuentra una coincidencia, imprime la posición (índice) donde se encontró el elemento.
                 return i
         print("Elemento no encontrado.")
         return -1
@@ -315,7 +316,7 @@ class OperacionesLista(MenuLista):
         while left <= right:
             mid = (left + right) // 2
             if lista_copiada[mid] == elemento:
-                print("Elemento encontrado en la posición", mid)
+                print(f'Elemento encontrado en la posición: {mid}')
                 return mid
             elif lista_copiada[mid] < elemento:
                 left = mid + 1
@@ -333,7 +334,7 @@ class Estadisticas(OperacionesLista):
     @property
     def sumar_elementos(self):
         suma = sum(self.mi_lista)
-        print("Suma de elementos:", suma)
+        print(f'Suma de elementos {suma}')
 
     @property    
     def calcular_promedio(self):
@@ -363,20 +364,20 @@ class Estadisticas(OperacionesLista):
     def encontrar_minimo(self):
         if len(self.mi_lista) > 0:
             minimo = min(self.mi_lista)
-            print("Mínimo de la lista: ", minimo)
+            print(f'Mínimo de la lista: {minimo}')
         else:
             print("La lista está vacía.")
     @property
     def encontrar_maximo(self):
         if len(self.mi_lista) > 0:
             maximo = max(self.mi_lista)
-            print("Máximo de la lista: ", maximo)
+            print(f'Máximo de la lista: {maximo}')
         else:
             print("La lista está vacía.")
     @property
     def mostrar_longitud_lista(self):
         longitud = len(self.mi_lista)
-        print("Longitud de la lista: ", longitud)      
+        print(f'Longitud de la lista: {longitud}')      
          
 if __name__ == "__main__":
     menu = Estadisticas()
